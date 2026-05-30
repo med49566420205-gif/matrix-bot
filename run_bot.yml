@@ -3,6 +3,10 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+  schedule:
+    # هذا السطر يجعل الـ Workflow يعيد تشغيل نفسه كل 6 ساعات تلقائياً كإجراء وقائي
+    - cron: "0 */6 * * *"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,6 +22,11 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
         run: |
+          # تشغيل البوت في الخلفية
           python bot.py &
-          
-          sleep 21600 
+          # انتظار لا نهائي لمنع إغلاق الـ Job
+          # سنستخدم حلقة لا نهائية ذكية لا تستهلك موارد السيرفر
+          while true; do
+            sleep 3600
+            echo "Matrix Bot is still alive..."
+          done
