@@ -1,11 +1,10 @@
 import os
 import telebot
 
-# تهيئة البوت باستخدام التوكن من متغيرات النظام
+
 TOKEN = os.environ.get('TELEGRAM_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
-# قاموس اللغات: يمكنك تعديله بالحذف أو الإضافة وسيتحدث البوت تلقائياً
 LANG_DATA = {
     'en': "Welcome! Matrix TV is back after 7 years. Proven legacy of 5M users. Watch our journey: https://youtu.be/stMOpwab6gM | Download: https://matrixandroidtv.wordpress.com/",
     'ar': "أهلاً بك! ماتريكس تي في يعود بعد 7 سنوات. إرث 5 مليون مستخدم. شاهد رحلتنا: https://youtu.be/stMOpwab6gM | التحميل: https://matrixandroidtv.wordpress.com/",
@@ -24,11 +23,11 @@ LANG_DATA = {
     'nl': "Welkom! Matrix TV is terug na 7 jaar. 5 miljoen gebruikers. Bekijk onze reis: https://youtu.be/stMOpwab6gM | Download: https://matrixandroidtv.wordpress.com/"
 }
 
-# معالج أمر البدء (Start Command) - ديناميكي بالكامل
+
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     try:
-        # إنشاء قائمة الأوامر ديناميكياً من مفاتيح القاموس
+
         lang_commands = " ".join([f"/{lang}" for lang in LANG_DATA.keys()])
         welcome_text = (
             "🌍 Matrix TV PRO: The Legend Returns! | أسطورة ماتريكس تعود!\n\n"
@@ -39,23 +38,23 @@ def send_welcome(message):
     except Exception as e:
         print(f"Error in start command: {e}")
 
-# معالج لاختيار اللغة ديناميكياً
+
 @bot.message_handler(commands=list(LANG_DATA.keys()))
 def lang_reply(message):
     try:
-        lang_code = message.text[1:] # إزالة علامة /
+        lang_code = message.text[1:] 
         bot.reply_to(message, LANG_DATA.get(lang_code, "Language not found."))
     except Exception as e:
         print(f"Error in lang handler: {e}")
 
-# معالج افتراضي
+
 @bot.message_handler(func=lambda message: True)
 def default_reply(message):
     bot.reply_to(message, "Welcome! Please use /start to see the menu. | مرحباً! استخدم /start لرؤية القائمة.")
 
 if __name__ == "__main__":
     print("Matrix Bot is running...")
-    # إضافة ميزة التكرار التلقائي في حال تعطل الاتصال
+    
     while True:
         try:
             bot.polling(none_stop=True)
