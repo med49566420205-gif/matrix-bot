@@ -1,10 +1,11 @@
 import os
 import telebot
 
+# تهيئة البوت باستخدام التوكن من متغيرات النظام (System Environment)
 TOKEN = os.environ.get('TELEGRAM_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
-# 15 Languages Structure for Global Reach
+# قاموس اللغات (Lang Data) - تمت مراجعته لضمان سلامة الروابط والنصوص
 LANG_DATA = {
     'en': "Welcome! Matrix TV is back after 7 years. Proven legacy of 5M users. Watch our journey: https://youtu.be/stMOpwab6gM | Download: https://matrixandroidtv.wordpress.com/",
     'ar': "أهلاً بك! ماتريكس تي في يعود بعد 7 سنوات. إرث 5 مليون مستخدم. شاهد رحلتنا: https://youtu.be/stMOpwab6gM | التحميل: https://matrixandroidtv.wordpress.com/",
@@ -23,6 +24,7 @@ LANG_DATA = {
     'nl': "Welkom! Matrix TV is terug na 7 jaar. 5 miljoen gebruikers. Bekijk onze reis: https://youtu.be/stMOpwab6gM | Download: https://matrixandroidtv.wordpress.com/"
 }
 
+# معالج أمر البدء (Start Command)
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     welcome_text = (
@@ -33,13 +35,20 @@ def send_welcome(message):
     )
     bot.reply_to(message, welcome_text)
 
+# معالج لاختيار اللغة ديناميكياً بناءً على مفاتيح القاموس
 @bot.message_handler(commands=list(LANG_DATA.keys()))
 def lang_reply(message):
-    lang = message.text[1:]
-    bot.reply_to(message, LANG_DATA[lang])
+    # الحصول على الأمر بدون العلامة /
+    lang_code = message.text[1:]
+    if lang_code in LANG_DATA:
+        bot.reply_to(message, LANG_DATA[lang_code])
 
+# معالج الافتراضي (Default Handler) في حال إرسال نص غير الأوامر
 @bot.message_handler(func=lambda message: True)
 def default_reply(message):
     bot.reply_to(message, "Welcome! Please use /start to see the menu. | مرحباً! استخدم /start لرؤية القائمة.")
 
-bot.polling(none_stop=True)
+# تشغيل البوت مع ضمان استمرارية العمل (None-stop polling)
+if __name__ == "__main__":
+    print("Matrix Bot is running...")
+    bot.polling(none_stop=True)
