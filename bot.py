@@ -55,10 +55,13 @@ def default_reply(message):
 if __name__ == "__main__":
     print("Matrix Bot is running...")
     
+    
+    bot.remove_webhook()
+    
     while True:
         try:
-            bot.polling(none_stop=True)
+            bot.polling(none_stop=True, interval=0, timeout=20)
         except Exception as e:
-            print(f"Bot crashed: {e}. Restarting in 5 seconds...")
+            print(f"Bot crashed: {e}. Restarting...")
             import time
             time.sleep(5)
