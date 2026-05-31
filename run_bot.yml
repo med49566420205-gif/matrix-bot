@@ -3,9 +3,6 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
-  schedule:
-    
-    - cron: "0 */6 * * *"
 
 jobs:
   build:
@@ -21,12 +18,4 @@ jobs:
       - name: Run Bot
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-        run: |
-          
-          python bot.py &
-          
-
-          while true; do
-            sleep 3600
-            echo "Matrix Bot is still alive..."
-          done
+        run: python bot.py
