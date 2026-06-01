@@ -1,8 +1,8 @@
+from google.colab import userdata
 import os
-os.environ['TELEGRAM_TOKEN'] = '8741875221:AAEu63UMnMvwIwDyWnZeRbFQMqS9s07PqtM' 
-
-
+os.environ['TELEGRAM_TOKEN'] = userdata.get('TELEGRAM_TOKEN')
 %run bot.py
+
 
 
 LANG_DATA = {
