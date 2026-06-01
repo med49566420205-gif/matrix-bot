@@ -2,7 +2,8 @@ import os
 import telebot
 
 
-TOKEN = os.environ.get('TELEGRAM_TOKEN')
+from google.colab import userdata
+TOKEN = userdata.get('TELEGRAM_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
 LANG_DATA = {
