@@ -1,10 +1,9 @@
 import os
-import telebot
+os.environ['TELEGRAM_TOKEN'] = '8741875221:AAEu63UMnMvwIwDyWnZeRbFQMqS9s07PqtM' 
 
 
-from google.colab import userdata
-TOKEN = userdata.get('TELEGRAM_TOKEN')
-bot = telebot.TeleBot(TOKEN)
+%run bot.py
+
 
 LANG_DATA = {
     'en': "Welcome! Matrix TV is back after 7 years. Proven legacy of 5M users. Watch our journey: https://youtu.be/stMOpwab6gM | Download: https://matrixandroidtv.wordpress.com/",
